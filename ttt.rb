@@ -36,34 +36,84 @@ end
 
 def make_a_move(cells, board)
   say "Where to place your next move? Choose from cell 1-9. "
-  move = gets.chomp
-  if (cells.include?(move.to_i) && board[move.to_i] == 0)
-    board[move.to_i] = 1
+  input = gets.chomp
+  move = input.to_i - 1
+  if (cells.include?(input.to_i) && board[move] == 0)
+    board[move] = 1
   else
     say "Invalid move. Try again."
-    make_move(cells, board)
+    make_a_move(cells, board)
   end
 end
 
 def computer_move(cells, board)
   loop do
-    move = cells.sample
-    if board[move-1] == 0
-      board[move-1] = 2
+    move = cells.sample - 1
+    if board[move] == 0
+      board[move] = 2
       break
     end
   end
 end
 
 
+def end_game?(board)
+  if ((board[0] * board[1] * board[2] == 1) ||
+      (board[2] * board[5] * board[8] == 1) ||
+      (board[6] * board[7] * board[8] == 1) ||
+      (board[0] * board[3] * board[6] == 1) ||
+      (board[0] * board[4] * board[8] == 1) ||
+      (board[2] * board[4] * board[6] == 1))
+    say "You won!"
+    play_again?
+  elsif ((board[0] * board[1] * board[2] == 8) ||
+        (board[2] * board[5] * board[8] == 8) ||
+        (board[6] * board[7] * board[8] == 8) ||
+        (board[0] * board[3] * board[6] == 8) ||
+        (board[0] * board[4] * board[8] == 8) ||
+        (board[2] * board[4] * board[6] == 8))
+    say "You lose..."
+    play_again?
+  elsif (!board.include?(0))
+    say "It's a draw."
+    play_again?
+  else
+  end
+end
 
 
+def start_round(cells, board)
+  display(board)
+  make_a_move(cells, board)
+  end_game?(board)
+  computer_move(cells, board)
+  end_game?(board)
+  start_round(cells, board)
+end
 
+def display(board)
+  say "#{board}"
+end
 
-board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+def play_again?
+  say "Play again? (Y/N)"
+  choice = gets.chomp.downcase
+  if choice == 'y'
+    new_game
+  elsif choice == 'n'
+    say "See you next time!"
+    abort
+  else 
+    say "Invalid choice. Try again."
+    play_again?
+  end
+end
 
-make_a_move(cells, board)
-computer_move(cells, board)
+def new_game
+  board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  start_round(cells, board)
+end
 
-binding.pry
+say "Welcome to the Tic Tac Toe game! "
+new_game
