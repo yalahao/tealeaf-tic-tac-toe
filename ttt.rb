@@ -35,7 +35,7 @@ def say(s)
 end
 
 def make_a_move(cells, board)
-  say "Where to place your next move? Choose from cell 1-9. "
+  say "Where to place your next move? Choose from cell 1-9."
   input = gets.chomp
   move = input.to_i - 1
   if (cells.include?(input.to_i) && board[move] == 0)
@@ -56,20 +56,23 @@ def computer_move(cells, board)
   end
 end
 
-
 def end_game?(board)
   if ((board[0] * board[1] * board[2] == 1) ||
-      (board[2] * board[5] * board[8] == 1) ||
+      (board[3] * board[4] * board[5] == 1) ||
       (board[6] * board[7] * board[8] == 1) ||
       (board[0] * board[3] * board[6] == 1) ||
+      (board[1] * board[4] * board[7] == 1) ||
+      (board[2] * board[5] * board[8] == 1) ||
       (board[0] * board[4] * board[8] == 1) ||
       (board[2] * board[4] * board[6] == 1))
     say "You won!"
     play_again?
-  elsif ((board[0] * board[1] * board[2] == 8) ||
-        (board[2] * board[5] * board[8] == 8) ||
+  elsif((board[0] * board[1] * board[2] == 8) ||
+        (board[3] * board[4] * board[5] == 8) ||
         (board[6] * board[7] * board[8] == 8) ||
         (board[0] * board[3] * board[6] == 8) ||
+        (board[1] * board[4] * board[7] == 8) ||
+        (board[2] * board[5] * board[8] == 8) ||
         (board[0] * board[4] * board[8] == 8) ||
         (board[2] * board[4] * board[6] == 8))
     say "You lose..."
@@ -81,7 +84,6 @@ def end_game?(board)
   end
 end
 
-
 def start_round(cells, board)
   display(board)
   make_a_move(cells, board)
@@ -92,7 +94,11 @@ def start_round(cells, board)
 end
 
 def display(board)
-  say "#{board}"
+  display_hash = { 0 => "_", 1 => "O", 2 => "X"}
+  say "The board is now:"
+  puts "    #{display_hash[board[0]]} #{display_hash[board[1]]} #{display_hash[board[2]]}"
+  puts "    #{display_hash[board[3]]} #{display_hash[board[4]]} #{display_hash[board[5]]}"
+  puts "    #{display_hash[board[6]]} #{display_hash[board[7]]} #{display_hash[board[8]]}"
 end
 
 def play_again?
@@ -115,5 +121,5 @@ def new_game
   start_round(cells, board)
 end
 
-say "Welcome to the Tic Tac Toe game! "
+say "Welcome to the Tic Tac Toe game!"
 new_game
