@@ -1,33 +1,3 @@
-# Pseudo code
-=begin
-
-Cell 1-9
-  States: x, o, empty
-  Array [0, 1, 2, 1, 2]
-
-Start round
-
-Choose to play
-  Validate choice
-  Validate empty_cell?
-  Change cell state
-
-Check game board status
-  Winning condition? - 6 cases
-  Full board?
-
-Computer play
-  Make a move
-  Validate move
-  Change cell state
-
-Check game board status
-
-Display the game board
-  Update the game board
-
-=end
-
 require 'pry'
 
 def say(s)
