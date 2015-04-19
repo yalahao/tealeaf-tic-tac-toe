@@ -1,3 +1,5 @@
+# My own solution before watching the video
+
 require 'pry'
 
 def say(s)
@@ -79,7 +81,7 @@ def play_again?
   elsif choice == 'n'
     say "See you next time!"
     abort
-  else 
+  else
     say "Invalid choice. Try again."
     play_again?
   end
