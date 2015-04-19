@@ -57,7 +57,7 @@ end
 def computer_winning_move(board)
   WINNING_LINES.each do |line|
     if (board.values_at(*line).count('[X]') == 2 && board.values_at(*line).include?('[ ]'))
-      move = line - (line & board.select{|k,v| v == '[X]'}.keys)
+      move = (line & empty_cells(board))
       return move[0]
     end
   end
@@ -77,7 +77,7 @@ end
 def computer_defending_move(board)
   WINNING_LINES.each do |line|
     if (board.values_at(*line).count('[O]') == 2 && board.values_at(*line).include?('[ ]'))
-      move = line - (line & board.select{|k,v| v == '[O]'}.keys)
+      move = (line & empty_cells(board))
       return move[0]
     end
   end
