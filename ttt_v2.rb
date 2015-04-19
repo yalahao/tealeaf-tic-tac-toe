@@ -54,6 +54,7 @@ def computer_makes_a_move(board)
   board[move] = '[X]'
 end
 
+# To complete a winning line
 def computer_winning_move(board)
   WINNING_LINES.each do |line|
     if (board.values_at(*line).count('[X]') == 2 && board.values_at(*line).include?('[ ]'))
@@ -64,6 +65,7 @@ def computer_winning_move(board)
   nil
 end
 
+# To form a potentially winning line
 def computer_attacking_move(board)
   WINNING_LINES.each do |line|
     if (board.values_at(*line).include?('[X]') && board.values_at(*line).count('[ ]') == 2)
@@ -74,6 +76,7 @@ def computer_attacking_move(board)
   nil
 end
 
+# To block player from winning
 def computer_defending_move(board)
   WINNING_LINES.each do |line|
     if (board.values_at(*line).count('[O]') == 2 && board.values_at(*line).include?('[ ]'))
