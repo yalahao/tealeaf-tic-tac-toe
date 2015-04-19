@@ -2,6 +2,8 @@
 
 require 'pry'
 
+WINNING_LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
+
 def say(s)
   puts "--- #{s} ---"
 end
@@ -38,27 +40,66 @@ def player_makes_a_move(board)
 end
 
 def computer_makes_a_move(board)
-  move = empty_cells(board).sample
+  if board[5] == '[ ]'
+    move = 5
+  elsif computer_winning_move(board)
+    move = computer_winning_move(board)
+  elsif computer_defending_move(board)
+    move = computer_defending_move(board)
+  elsif computer_attacking_move(board)
+    move = computer_attacking_move(board)
+  else
+    move = empty_cells(board).sample
+  end
   board[move] = '[X]'
 end
 
+def computer_winning_move(board)
+  WINNING_LINES.each do |line|
+    if (board.values_at(*line).count('[X]') == 2 && board.values_at(*line).include?('[ ]'))
+      move = line - (line & board.select{|k,v| v == '[X]'}.keys)
+      return move[0]
+    end
+  end
+  nil
+end
+
+def computer_attacking_move(board)
+  WINNING_LINES.each do |line|
+    if (board.values_at(*line).include?('[X]') && board.values_at(*line).count('[ ]') == 2)
+      move = (line & empty_cells(board))
+      return move[0]
+    end
+  end
+  nil
+end
+
+def computer_defending_move(board)
+  WINNING_LINES.each do |line|
+    if (board.values_at(*line).count('[O]') == 2 && board.values_at(*line).include?('[ ]'))
+      move = line - (line & board.select{|k,v| v == '[O]'}.keys)
+      return move[0]
+    end
+  end
+  nil
+end
+
 def winner(board)
-  winning_lines = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
-  winning_lines.each do |line|
+  WINNING_LINES.each do |line|
     if board.values_at(*line).count('[O]') == 3
       return "Player"
     elsif board.values_at(*line).count('[X]') == 3
       return "Computer"
     end
   end
-  return nil
+  nil
 end
 
 def check_end_game(board)
   if winner(board)
     say "#{winner(board)} won!"
     play_again?
-  elsif !empty_cells(board)
+  elsif empty_cells(board) == [ ]
     say "It's a tie."
     play_again?
   end
