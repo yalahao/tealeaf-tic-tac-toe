@@ -25,7 +25,7 @@ def display_board(board)
 end
 
 def empty_cells(board)
-  return board.select{|k,v| v == '[ ]'}.keys
+  board.select{|k,v| v == '[ ]'}.keys
 end
 
 def player_makes_a_move(board)
