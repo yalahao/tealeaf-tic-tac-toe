@@ -57,52 +57,24 @@ end
 def check_end_game(board)
   if winner(board)
     say "#{winner(board)} won!"
+    play_again?
   elsif !empty_cells(board)
     say "It's a tie."
+    play_again?
   end
 end
 
 
-
-# BEGIN original code
-
-
-
-def end_game?(board)
-  if ((board[0] * board[1] * board[2] == 1) ||
-      (board[3] * board[4] * board[5] == 1) ||
-      (board[6] * board[7] * board[8] == 1) ||
-      (board[0] * board[3] * board[6] == 1) ||
-      (board[1] * board[4] * board[7] == 1) ||
-      (board[2] * board[5] * board[8] == 1) ||
-      (board[0] * board[4] * board[8] == 1) ||
-      (board[2] * board[4] * board[6] == 1))
-    say "You won!"
-    play_again?
-  elsif((board[0] * board[1] * board[2] == 8) ||
-        (board[3] * board[4] * board[5] == 8) ||
-        (board[6] * board[7] * board[8] == 8) ||
-        (board[0] * board[3] * board[6] == 8) ||
-        (board[1] * board[4] * board[7] == 8) ||
-        (board[2] * board[5] * board[8] == 8) ||
-        (board[0] * board[4] * board[8] == 8) ||
-        (board[2] * board[4] * board[6] == 8))
-    say "You lose..."
-    play_again?
-  elsif (!board.include?(0))
-    say "It's a draw."
-    play_again?
-  else
-  end
-end
-
-def start_round(cells, board)
-  display(board)
-  make_a_move(cells, board)
-  end_game?(board)
-  computer_move(cells, board)
-  end_game?(board)
-  start_round(cells, board)
+def start_round(board)
+  display_board(board)
+  player_makes_a_move(board)
+  display_board(board)
+  check_end_game(board)
+  computer_makes_a_move(board)
+  display_board(board)
+  check_end_game(board)
+  binding.pry
+  start_round(board)
 end
 
 
@@ -121,17 +93,8 @@ def play_again?
 end
 
 def new_game
-  board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  start_round(cells, board)
+  board = new_board
+  start_round(board)
 end
 
-say "Welcome to the Tic Tac Toe game!"
-
-board = new_board
-player_makes_a_move(board)
-display_board(board)
-check_end_game(board)
-computer_makes_a_move(board)
-display_board(board)
-check_end_game(board)
+new_game
