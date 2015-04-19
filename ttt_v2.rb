@@ -14,6 +14,7 @@ end
 
 def display_board(board)
   system 'clear'
+  say "Tic Tac Toe"
   puts
   puts "    #{board[1]} #{board[2]} #{board[3]}"
   puts "    #{board[4]} #{board[5]} #{board[6]}"
@@ -48,10 +49,9 @@ def winner(board)
       return "Player"
     elsif board.values_at(*line).count('[X]') == 3
       return "Computer"
-    else
-      return nil
     end
   end
+  return nil
 end
 
 def check_end_game(board)
@@ -73,7 +73,6 @@ def start_round(board)
   computer_makes_a_move(board)
   display_board(board)
   check_end_game(board)
-  binding.pry
   start_round(board)
 end
 
