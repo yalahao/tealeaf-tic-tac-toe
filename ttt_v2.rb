@@ -105,19 +105,6 @@ def check_end_game(board)
   end
 end
 
-
-def start_round(board)
-  display_board(board)
-  player_makes_a_move(board)
-  display_board(board)
-  check_end_game(board)
-  computer_makes_a_move(board)
-  display_board(board)
-  check_end_game(board)
-  start_round(board)
-end
-
-
 def play_again?
   say "Play again? (Y/N)"
   choice = gets.chomp.downcase
@@ -130,6 +117,17 @@ def play_again?
     say "Invalid choice. Try again."
     play_again?
   end
+end
+
+def start_round(board)
+  display_board(board)
+  player_makes_a_move(board)
+  display_board(board)
+  check_end_game(board)
+  computer_makes_a_move(board)
+  display_board(board)
+  check_end_game(board)
+  start_round(board)
 end
 
 def new_game
