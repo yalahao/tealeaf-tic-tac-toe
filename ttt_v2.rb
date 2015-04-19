@@ -11,7 +11,7 @@ end
 def new_board
   board = { }
   (1..9).each {|cell| board[cell] = '[ ]'}
-  return board
+  board
 end
 
 def display_board(board)
