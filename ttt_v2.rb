@@ -43,15 +43,15 @@ end
 
 def winner(board)
   winning_lines = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
-  winning_lines.each {|line|
-    if board.values_at(line).count('[O]') == 3
+  winning_lines.each do |line|
+    if board.values_at(*line).count('[O]') == 3
       return "Player"
-    elsif board.values_at(line).count('[X]') == 3
+    elsif board.values_at(*line).count('[X]') == 3
       return "Computer"
     else
       return nil
     end
-  }
+  end
 end
 
 def check_end_game(board)
