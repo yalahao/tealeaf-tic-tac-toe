@@ -1,7 +1,3 @@
-# Refactored solution after reading the official solution
-
-require 'pry'
-
 WINNING_LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 
 def say(s)
@@ -25,7 +21,7 @@ def display_board(board)
 end
 
 def empty_cells(board)
-  board.select{|k,v| v == '[ ]'}.keys
+  board.select{|_,v| v == '[ ]'}.keys
 end
 
 def player_makes_a_move(board)
@@ -40,17 +36,17 @@ def player_makes_a_move(board)
 end
 
 def computer_makes_a_move(board)
-  if board[5] == '[ ]'
-    move = 5
-  elsif computer_winning_move(board)
-    move = computer_winning_move(board)
-  elsif computer_defending_move(board)
-    move = computer_defending_move(board)
-  elsif computer_attacking_move(board)
-    move = computer_attacking_move(board)
-  else
-    move = empty_cells(board).sample
-  end
+  move = if board[5] == '[ ]'
+            move = 5
+          elsif (result = computer_winning_move(board))
+            result
+          elsif (result = computer_defending_move(board))
+            result
+          elsif (result = computer_attacking_move(board))
+            result
+          else
+            result = empty_cells(board).sample
+          end
   board[move] = '[X]'
 end
 
@@ -101,14 +97,14 @@ end
 def check_end_game(board)
   if winner(board)
     say "#{winner(board)} won!"
-    play_again?
+    play_again
   elsif empty_cells(board) == [ ]
     say "It's a tie."
-    play_again?
+    play_again
   end
 end
 
-def play_again?
+def play_again
   say "Play again? (Y/N)"
   choice = gets.chomp.downcase
   if choice == 'y'
@@ -118,7 +114,7 @@ def play_again?
     abort
   else
     say "Invalid choice. Try again."
-    play_again?
+    play_again
   end
 end
 
